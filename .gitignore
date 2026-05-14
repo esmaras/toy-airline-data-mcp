@@ -1,0 +1,28 @@
+# Virtual environment — never commit, recreate from requirements.txt
+venv/
+
+# Generated Delta tables — large binary data, derived from raw_data
+delta_tables/
+
+# Raw Excel Data will not be stored with this repo. Add in yourself after cloning.
+raw_data/*
+!raw_data/.gitkeep
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# OS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Test artifacts
+.pytest_cache/
+.coverage
+htmlcov/

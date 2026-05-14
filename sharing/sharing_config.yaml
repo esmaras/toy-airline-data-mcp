@@ -1,0 +1,66 @@
+# Delta Sharing configuration
+# Maps the sharing protocol hierarchy to Delta table paths in delta_tables/
+
+shares:
+  - name: southwest_airline
+    schemas:
+
+      - name: schedules
+        tables:
+          - name: oag_may
+            location: delta_tables/1_schedules_oag_may__oag
+
+          - name: oag_may_lists
+            location: delta_tables/1_schedules_oag_may__lists
+
+          - name: oag_nov
+            location: delta_tables/1_schedules_oag_nov__oag
+
+          - name: oag_nov_lists
+            location: delta_tables/1_schedules_oag_nov__lists
+
+          - name: wn_departures_arrivals
+            location: delta_tables/1a_schedules_wn_departures_and_arrivals__an
+
+          - name: market_competition_analysis
+            location: delta_tables/1b_schedules_market_and_competition__an
+
+          - name: market_seat_share
+            location: delta_tables/1b_schedules_market_and_competition__sst
+
+          - name: market_tab
+            location: delta_tables/1b_schedules_market_and_competition__tab
+
+      - name: aircraft
+        tables:
+          - name: aircraft_list
+            location: delta_tables/2_aircraft_rotation_fr24_apr__ac
+
+          - name: rotation_fr24
+            location: delta_tables/2_aircraft_rotation_fr24_apr__fr24
+
+          - name: rotation_lists
+            location: delta_tables/2_aircraft_rotation_fr24_apr__lists
+
+          - name: rotation_analysis
+            location: delta_tables/2a_aircraft_rotation_analysis__an
+
+          - name: rotation_tab
+            location: delta_tables/2a_aircraft_rotation_analysis__tab
+
+      - name: fares
+        tables:
+          - name: fare_analysis_1
+            location: delta_tables/3_fares_and_fare_analysis__an1
+
+          - name: fare_analysis_2
+            location: delta_tables/3_fares_and_fare_analysis__an2
+
+          - name: fare_analysis_3
+            location: delta_tables/3_fares_and_fare_analysis__an3
+
+          - name: fare_chart_maker
+            location: delta_tables/3_fares_and_fare_analysis__cm
+
+          - name: fare_raw_data
+            location: delta_tables/3_fares_and_fare_analysis__rd
