@@ -1,0 +1,25 @@
+FROM python:3.12-slim
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Install DuckDB extensions at build time so they're baked into the image
+RUN python -c "\
+import duckdb; \
+c = duckdb.connect('/tmp/setup.db'); \
+c.execute('INSTALL delta'); \
+c.execute('INSTALL httpfs'); \
+print('DuckDB extensions installed')"
+
+COPY sharing/ ./sharing/
+COPY ingestion/ ./ingestion/
+COPY mcp_server/ ./mcp_server/
+
+EXPOSE 8080
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=15s --retries=3 \
+    CMD python -c "import httpx; httpx.get('http://localhost:8080/shares', timeout=3)" || exit 1
+
+CMD ["uvicorn", "sharing.server:app", "--host", "0.0.0.0", "--port", "8080", "--workers", "2"]

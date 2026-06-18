@@ -28,7 +28,7 @@ shares:
           - name: market_seat_share
             location: delta_tables/1b_schedules_market_and_competition__sst
 
-          - name: market_tab
+          - name: market_competition_summary
             location: delta_tables/1b_schedules_market_and_competition__tab
 
       - name: aircraft
@@ -42,21 +42,21 @@ shares:
           - name: rotation_lists
             location: delta_tables/2_aircraft_rotation_fr24_apr__lists
 
-          - name: rotation_analysis
+          - name: aircraft_rotation_metrics
             location: delta_tables/2a_aircraft_rotation_analysis__an
 
-          - name: rotation_tab
+          - name: fleet_rotation_by_aircraft_type
             location: delta_tables/2a_aircraft_rotation_analysis__tab
 
       - name: fares
         tables:
-          - name: fare_analysis_1
+          - name: fare_metrics_dal_bwi
             location: delta_tables/3_fares_and_fare_analysis__an1
 
-          - name: fare_analysis_2
+          - name: fare_by_route_region
             location: delta_tables/3_fares_and_fare_analysis__an2
 
-          - name: fare_analysis_3
+          - name: rasm_by_region
             location: delta_tables/3_fares_and_fare_analysis__an3
 
           - name: fare_chart_maker

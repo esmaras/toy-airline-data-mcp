@@ -1,0 +1,2 @@
+ecr_mcp_server_url = "730649731624.dkr.ecr.us-east-1.amazonaws.com/clearpath-dev/mcp-server"
+ecr_sharing_server_url = "730649731624.dkr.ecr.us-east-1.amazonaws.com/clearpath-dev/sharing-server"

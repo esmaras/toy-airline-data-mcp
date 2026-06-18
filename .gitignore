@@ -26,3 +26,23 @@ __pycache__/
 .pytest_cache/
 .coverage
 htmlcov/
+
+# AWS credentials — never commit the actual .env files (only .env.example is safe to commit)
+.env.dev
+.env.prod
+.env.staging
+
+# Next.js web app
+web/.next/
+web/node_modules/
+web/.env.local
+
+# Terraform — never commit state or secrets
+infra/.terraform/
+infra/.terraform.lock.hcl
+infra/terraform.tfstate
+infra/terraform.tfstate.backup
+infra/**/.terraform/
+infra/**/*.tfstate
+infra/**/*.tfstate.backup
+infra/**/terraform.tfvars

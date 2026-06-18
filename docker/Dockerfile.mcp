@@ -1,0 +1,24 @@
+FROM python:3.12-slim
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Install DuckDB extensions at build time
+RUN python -c "\
+import duckdb; \
+c = duckdb.connect('/tmp/setup.db'); \
+c.execute('INSTALL delta'); \
+c.execute('INSTALL httpfs'); \
+print('DuckDB extensions installed')"
+
+COPY mcp_server/ ./mcp_server/
+COPY sharing/ ./sharing/
+
+# Overridden at runtime by ECS task env var when sharing server runs as a sidecar
+ENV SHARING_SERVER_URL=http://localhost:8080
+
+EXPOSE 8081
+
+CMD ["python", "-m", "mcp_server.server", "--transport", "sse", "--port", "8081"]

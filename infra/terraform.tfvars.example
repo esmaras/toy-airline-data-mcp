@@ -1,0 +1,14 @@
+# Copy to terraform.tfvars and fill in values before applying.
+# Do NOT commit terraform.tfvars to git (it's in .gitignore).
+
+aws_region  = "us-east-1"
+environment = "dev"
+
+# Set after ECR repos are created and images are pushed
+# Example: 123456789012.dkr.ecr.us-east-1.amazonaws.com/clearpath-dev/sharing-server:latest
+sharing_server_image = ""
+mcp_server_image     = ""
+
+# Leave empty for HTTP-only dev deployment.
+# Set to an ACM certificate ARN for HTTPS.
+certificate_arn = ""

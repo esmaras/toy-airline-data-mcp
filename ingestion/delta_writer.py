@@ -33,18 +33,24 @@ def _sanitize_object_columns(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def write_delta_table(table_name: str, df: pd.DataFrame, base_path: Path) -> Path:
+def write_delta_table(table_name: str, df: pd.DataFrame, base_path: Path | str) -> str:
     """
     Write a DataFrame to a Delta table at base_path/table_name.
 
+    base_path may be a local Path or an S3 URI string (e.g. s3://bucket/prefix).
     Uses mode='overwrite' so re-runs are idempotent.
-    Returns the path written to.
+    Returns the destination path/URI as a string.
     """
-    dest = base_path / table_name
-    dest.mkdir(parents=True, exist_ok=True)
+    if isinstance(base_path, str) and base_path.startswith("s3://"):
+        dest = f"{base_path.rstrip('/')}/{table_name}"
+        storage_options = {"AWS_DEFAULT_REGION": __import__("os").getenv("AWS_DEFAULT_REGION", "us-east-1")}
+    else:
+        dest_path = Path(base_path) / table_name
+        dest_path.mkdir(parents=True, exist_ok=True)
+        dest = str(dest_path)
+        storage_options = {}
 
     df = _sanitize_object_columns(df)
-
     arrow_table = pa.Table.from_pandas(df, preserve_index=False)
-    write_deltalake(str(dest), arrow_table, mode="overwrite")
+    write_deltalake(dest, arrow_table, mode="overwrite", storage_options=storage_options or None)
     return dest

@@ -7,11 +7,12 @@ can serve requests.
 """
 
 import json
+import os
 from typing import Any
 
 import httpx
 
-SHARING_SERVER_URL = "http://localhost:8080"
+SHARING_SERVER_URL = os.getenv("SHARING_SERVER_URL", "http://localhost:8080")
 TIMEOUT = 10.0
 
 
